@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Autor_Blog</title>
+</head>
+<body>
+
+    <h2>Autor_Blog</h2>
+    <form method="post" action="{% url 'blog' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit">To publish</button>
+    </form>
+
+</body>
+</html>

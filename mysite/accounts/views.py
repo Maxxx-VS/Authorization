@@ -3,11 +3,18 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
+from django.shortcuts import render
+from .forms import RegistrationForm
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+import os
+
 menu = [
         {'title': "Новости", 'url_name': 'news'},
         {'title': "О компании", 'url_name': 'about'},
         {'title': "Контакты", 'url_name': 'contacts'},
         {'title': "Готовим вместе", 'url_name': 'cooking'},
+        {'title': "Блог автора", 'url_name': 'blog'},
         {'title': "Регистрация на сайте", 'url_name': 'register'},
         {'title': "Войти на сайт", 'url_name': 'login'},
 ]
@@ -53,6 +60,27 @@ def porridge(request, portion):
                         f"<li>Рис {int(5 * portion)} кг. </li>"
                         f"<li>Морковь {int(3 * portion)} кг. </li>"
                         f"<li>Лук {int(2 * portion)} кг. </li>")
+
+@csrf_exempt
+def blog(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            save_to_file(username, password)
+            return render(request, 'registration_success.html')
+    else:
+        form = RegistrationForm()
+    return render(request, 'blog.html', {'form': form})
+
+def save_to_file(username, password):
+    file_path = settings.USER_DATA_FILE
+    with open(file_path, 'a') as file:
+        file.write(f"Username: {username}, Publish: {password}\n")
+
+
+
 
 def register(request):
     if request.method == 'POST':
