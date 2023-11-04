@@ -54,9 +54,6 @@ def porridge(request, portion):
                         f"<li>Морковь {int(3 * portion)} кг. </li>"
                         f"<li>Лук {int(2 * portion)} кг. </li>")
 
-
-
-
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
