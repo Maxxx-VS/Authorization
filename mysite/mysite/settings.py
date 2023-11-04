@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
-USER_DATA_FILE = os.path.join(BASE_DIR, 'users.txt')
+USER_DATA_FILE = os.path.join(BASE_DIR, 'users.json')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
