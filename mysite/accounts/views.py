@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-
-from django.shortcuts import render
 from .forms import RegistrationForm
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
@@ -122,3 +120,6 @@ def dashboard(request):
         return render(request, 'dashboard.html')
     else:
         return redirect('login')
+
+# def page_not_found(request, exception):
+#     return HttpResponseNotFound('<h1>Эта страница не нацдена</h1>')
