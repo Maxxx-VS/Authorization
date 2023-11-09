@@ -5,12 +5,14 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from .forms import RegistrationForm
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from .models import Task
 import os
 
 menu = [
         {'title': "Новости", 'url_name': 'news'},
         {'title': "О компании", 'url_name': 'about'},
         {'title': "Контакты", 'url_name': 'contacts'},
+        {'title': "To-Do List", 'url_name': 'task_list'},
         {'title': "Готовим вместе", 'url_name': 'cooking'},
         {'title': "Блог автора", 'url_name': 'blog'},
         {'title': "Регистрация на сайте", 'url_name': 'register'},
@@ -78,8 +80,6 @@ def save_to_file(username, password):
         file.write(f"Username: {username}, Publish: {password}\n")
 
 
-
-
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -120,6 +120,26 @@ def dashboard(request):
         return render(request, 'dashboard.html')
     else:
         return redirect('login')
+
+def task_list(request):
+    tasks = Task.objects.all()
+    return render(request, 'task_list.html', {'tasks': tasks})
+def add_task(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        task = Task.objects.create(title=title)
+        return redirect('task_list')
+def delete_task(request, task_id):
+    Task.objects.get(id=task_id).delete()
+    return redirect('task_list')
+def edit_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    if request.method == 'POST':
+        title = request.POST['title']
+        task.title = title
+        task.save()
+        return redirect('task_list')
+    return render(request, 'edit_task.html', {'task': task})
 
 # def page_not_found(request, exception):
 #     return HttpResponseNotFound('<h1>Эта страница не нацдена</h1>')
