@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Ты не зарегистрировался</h1>
     <div class="container mt-5">
         <h3>To-Do List</h3>
         <form method="POST" action="{% url 'add_task' %}">
@@ -37,12 +36,10 @@
             </tbody>
         </table>
     </div>
-    <br>
-    <hr><hr>
-    <br>
-    <form method="POST" action="{% url 'task_list' %}">
+    <form method="POST" action="{% url 'logout' %}">
         {% csrf_token %}
-        <button type="submit">To-DO List</button>
+        <button type="submit">Login</button>
     </form>
+
 </body>
 </html>
