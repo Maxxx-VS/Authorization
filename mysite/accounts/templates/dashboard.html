@@ -11,5 +11,12 @@
         {% csrf_token %}
         <button type="submit">Logout</button>
     </form>
+    <br>
+    <hr><hr>
+    <br>
+    <form method="POST" action="{% url 'task_list' %}">
+        {% csrf_token %}
+        <button type="submit">To-Do List</button>
+    </form>
 </body>
 </html>

@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import Task
 import os
-
+flag = False
 menu = [
         {'title': "Новости", 'url_name': 'news'},
         {'title': "О компании", 'url_name': 'about'},
@@ -88,13 +88,13 @@ def register(request):
 
         if password1 == password2:
             if User.objects.filter(username=username).exists():
-                return render(request, 'register.html', {'error': 'Username is already taken.'})
+                return render(request, 'register.html', {'error': 'Имя пользователя уже занято.'})
             else:
                 user = User.objects.create_user(username=username, password=password1)
                 user.save()
                 return redirect('login')
         else:
-            return render(request, 'register.html', {'error': 'Passwords do not match.'})
+            return render(request, 'register.html', {'error': 'Пароли не совпадают.'})
     else:
         return render(request, 'register.html')
 def login(request):
@@ -108,7 +108,7 @@ def login(request):
             auth.login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials.'})
+            return render(request, 'login.html', {'error': 'Неверные учетные данные.'})
     else:
         return render(request, 'login.html')
 def logout(request):
@@ -116,14 +116,22 @@ def logout(request):
         auth.logout(request)
         return redirect('login')
 def dashboard(request):
+    global flag
     if request.user.is_authenticated:
+        flag = True
         return render(request, 'dashboard.html')
     else:
         return redirect('login')
 
+
 def task_list(request):
-    tasks = Task.objects.all()
-    return render(request, 'task_list.html', {'tasks': tasks})
+    global flag
+    if flag == True:
+        tasks = Task.objects.all()
+        return render(request, 'task_list.html', {'tasks': tasks})
+    else:
+        return render(request, 'task_list_no.html')
+
 def add_task(request):
     if request.method == 'POST':
         title = request.POST['title']
