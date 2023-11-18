@@ -6,6 +6,11 @@
 </head>
 <body>
     <div class="container mt-5">
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <button type="submit">Register</button>
+        </form>
+        <br>
         <h3>To-Do List</h3>
         <form method="POST" action="{% url 'add_task' %}">
             {% csrf_token %}
@@ -16,6 +21,7 @@
                 </div>
             </div>
         </form>
+
         <table class="table">
             <thead>
                 <tr>
