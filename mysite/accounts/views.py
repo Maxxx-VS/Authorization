@@ -123,31 +123,38 @@ def dashboard(request):
     else:
         return redirect('login')
 
-
 def task_list(request):
-    global flag
-    if flag == True:
-        tasks = Task.objects.all()
-        return render(request, 'task_list.html', {'tasks': tasks})
-    else:
-        return render(request, 'task_list_no.html')
+    tasks = Task.objects.all()
+    return render(request, 'task_list.html', {'tasks': tasks})
 
+# добавить проверку на флаг
 def add_task(request):
-    if request.method == 'POST':
-        title = request.POST['title']
-        task = Task.objects.create(title=title)
+    global flag
+    if flag:
+        if request.method == 'POST':
+            title = request.POST['title']
+            task = Task.objects.create(title=title)
+            return redirect('task_list')
+    else:
         return redirect('task_list')
 def delete_task(request, task_id):
-    Task.objects.get(id=task_id).delete()
-    return redirect('task_list')
-def edit_task(request, task_id):
-    task = Task.objects.get(id=task_id)
-    if request.method == 'POST':
-        title = request.POST['title']
-        task.title = title
-        task.save()
+    global flag
+    if flag:
+        Task.objects.get(id=task_id).delete()
         return redirect('task_list')
-    return render(request, 'edit_task.html', {'task': task})
-
+    else:
+        return redirect('task_list')
+def edit_task(request, task_id):
+    global flag
+    if flag:
+        task = Task.objects.get(id=task_id)
+        if request.method == 'POST':
+            title = request.POST['title']
+            task.title = title
+            task.save()
+            return redirect('task_list')
+        return render(request, 'edit_task.html', {'task': task})
+    else:
+        return redirect('task_list')
 # def page_not_found(request, exception):
 #     return HttpResponseNotFound('<h1>Эта страница не нацдена</h1>')
