@@ -34,7 +34,7 @@ def news(request):
     data = {'title': "Новости"}
     return render(request, 'news.html', data)
 def about(request):
-    return render(request, 'about.html', {'title': 'О компании'})
+    return render(request, 'about.html', {'title': 'О компании', 'menu': menu})
 def contacts(request):
     return HttpResponse("<h1>Контакты</h1")
 def show_post(request, post_id):
