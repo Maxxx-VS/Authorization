@@ -112,7 +112,7 @@ def login(request):
             auth.login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'login.html', {'error': 'Неверные учетные данные.'})
+            return render(request, 'login.html', {'error': 'Введены неверные данные!'})
     else:
         return render(request, 'login.html')
 def logout(request):
