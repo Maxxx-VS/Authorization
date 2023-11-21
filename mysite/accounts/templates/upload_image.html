@@ -5,9 +5,43 @@
     <title>Upload</title>
 </head>
 <body>
-  <h1>Загрузите картинку</h1>
+  <h1>Загрузите картинку и выберете фильтр:</h1>
+
+
+
+
   <form action="{% url 'process_image' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+      <div>
+    <input type="radio" id="choice_1" name="my_filter" value="DarkFilter" checked />
+    <label for="choice_1">DarkFilter</label>
+  </div>
+  <hr>
+  <div>
+    <input type="radio" id="choice_2" name="my_filter" value="BrightFilter" />
+    <label for="choice_2">BrightFilter</label>
+  </div>
+  <hr>
+  <div>
+    <input type="radio" id="choice_3" name="my_filter" value="RedFilter" />
+    <label for="choice_3">RedFilter</label>
+  </div>
+  <hr>
+  <div>
+    <input type="radio" id="choice_4" name="my_filter" value="GreenFilter" />
+    <label for="choice_4">GreenFilter</label>
+  </div>
+  <hr>
+  <div>
+    <input type="radio" id="choice_5" name="my_filter" value="BlueFilter" />
+    <label for="choice_5">BlueFilter</label>
+  </div>
+  <hr>
+  <div>
+    <input type="radio" id="choice_6" name="my_filter" value="Drugs_eye" />
+    <label for="choice_6">Drugs_eye</label>
+  </div>
+  <br>
     <input type="file" name="image">
     <button type="submit">Начать обработку</button>
   </form>

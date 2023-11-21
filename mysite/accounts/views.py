@@ -6,6 +6,7 @@ from .forms import RegistrationForm
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import Task
+from random import *
 import os
 from PIL import Image
 
@@ -115,7 +116,9 @@ def login(request):
     else:
         return render(request, 'login.html')
 def logout(request):
+    global flag
     if request.method == 'POST':
+        flag = False
         auth.logout(request)
         return redirect('login')
 def dashboard(request):
@@ -124,7 +127,7 @@ def dashboard(request):
         flag = True
         return render(request, 'dashboard.html')
     else:
-        return redirect('login')
+        return redirect('login.html')
 
 def task_list(request):
     tasks = Task.objects.all()
@@ -211,7 +214,8 @@ def process_image(request):
     if request.method == "POST":
         image_file = request.FILES['image']
         image = Image.open(image_file)
-        filtered_image = apply_filter(image, GreenFilter)
+        a = request.POST.get('my_filter')
+        filtered_image = apply_filter(image, eval(a))
         filtered_image.save('processed_image.jpg')
         filtered_image.show()
         return HttpResponse('Изображение обработанао и сохранено')
