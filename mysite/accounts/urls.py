@@ -1,6 +1,7 @@
 from django.urls import path, include, register_converter
 from . import views
 from . import converters
+from . views import process_image
 
 register_converter(converters.FourDigitYearConverter, 'year4')
 
@@ -19,5 +20,6 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('post/<int:post_id>/', views.show_post, name='post'),
+    path('process_image/', process_image, name='process_image')
 ]
 

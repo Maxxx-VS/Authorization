@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from .models import Task
 import os
+from PIL import Image
+
 flag = False
 menu = [
         {'title': "Новости", 'url_name': 'news'},
@@ -156,5 +158,29 @@ def edit_task(request, task_id):
         return render(request, 'edit_task.html', {'task': task})
     else:
         return redirect('task_list')
+
+def DarkFilter(r: int, g: int, b: int) -> tuple[int, int, int]:
+    result = []
+    for color in (r, g, b):
+        result = [int(r/3), int(g/3), int(b/3)]
+    return tuple(result)
+def apply_filter(img: Image.Image, filt) -> Image.Image:
+    for i in range(img.width):
+        for j in range(img.height):
+            r,g,b = img.getpixel((i, j))
+            new_pixel = filt(r,g,b)
+            img.putpixel((i, j), new_pixel)
+    return img
+def process_image(request):
+    if request.method == "POST":
+        image_file = request.FILES['image']
+        image = Image.open(image_file)
+        filtered_image = apply_filter(image, DarkFilter)
+        filtered_image.save('processed_image.jpg')
+        return HttpResponse('Изображение обработанао и сохранено')
+    return render(request, 'upload_image.html')
+
+
+
 # def page_not_found(request, exception):
 #     return HttpResponseNotFound('<h1>Эта страница не нацдена</h1>')
