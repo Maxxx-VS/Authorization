@@ -7,9 +7,6 @@
 <body>
   <h1>Загрузите картинку и выберете фильтр:</h1>
 
-
-
-
   <form action="{% url 'process_image' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
       <div>
@@ -41,7 +38,8 @@
     <input type="radio" id="choice_6" name="my_filter" value="Drugs_eye" />
     <label for="choice_6">Drugs_eye</label>
   </div>
-  <br>
+  <hr>
+  <div>
     <input type="file" name="image">
     <button type="submit">Начать обработку</button>
   </form>

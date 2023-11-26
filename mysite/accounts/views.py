@@ -216,9 +216,9 @@ def process_image(request):
         image = Image.open(image_file)
         a = request.POST.get('my_filter')
         filtered_image = apply_filter(image, eval(a))
-        filtered_image.save('processed_image.jpg')
+        filtered_image.save('mysite/processed_image.jpg')
         filtered_image.show()
-        return HttpResponse('Изображение обработанао и сохранено')
+        return render(request, 'img_sp.html')
     return render(request, 'upload_image.html')
 
 
