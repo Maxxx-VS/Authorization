@@ -1,9 +1,10 @@
+from django.conf.urls.static import static
 from django.urls import path, include, register_converter
 from . import views
 from . import converters
 from . views import process_image
 from django.conf import settings
-from django.conf.urls.static import static
+# from django.conf.urls.static import static
 
 
 
