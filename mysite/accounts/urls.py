@@ -3,10 +3,7 @@ from django.urls import path, include, register_converter
 from . import views
 from . import converters
 from . views import process_image
-from django.conf import settings
-# from django.conf.urls.static import static
-
-
+from ..mysite import settings
 
 register_converter(converters.FourDigitYearConverter, 'year4')
 
@@ -26,7 +23,4 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('post/<int:post_id>/', views.show_post, name='post'),
     path('process_image/', process_image, name='process_image'),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

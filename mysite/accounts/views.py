@@ -216,7 +216,7 @@ def process_image(request):
         image = Image.open(image_file)
         a = request.POST.get('my_filter')
         filtered_image = apply_filter(image, eval(a))
-        filtered_image.save('C:/Users/hot-z/django2/mysite/media/processed_image.jpg')
+        filtered_image.save('C:/Users/hot-z/django2/mysite/static/processed_image.jpg')
         filtered_image.show()
         return render(request, 'img_sp.html')
     return render(request, 'upload_image.html')
