@@ -1,14 +1,18 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href='mysite/accounts/static/css/img.css' />
     <title>Title</title>
 </head>
 <body>
-  <h1>Изображение обработанао и сохранено!</h1>
-    <br><hr>
+    <h1>Изображение обработанао и сохранено!</h1>
+    <img src="{% static 'C:\Users\hot-z\django2\mysite\accounts\static\images\processed_image.jpg' %}" alt="Изображение1" ><br><br>
+    <img src="{% static 'C:/Users/hot-z/django2/mysite/accounts/static/images/processed_image.jpg' %}" alt="Изображение2" ><br><br>
+    <img src="{% static 'mysite/accounts/static/images/processed_image.jpg' %}" alt="Изображение3" ><br><br>
+    <img src="{% static 'mysite/accounts/static/images/processed_image.jpg' %}" alt="Изображение4" >
 
-  <p><img src="mysite/static/processed_image.jpg"></p>
 
     <hr>
 </body>
